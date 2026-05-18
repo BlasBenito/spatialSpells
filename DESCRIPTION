@@ -1,15 +1,16 @@
-Package: pkgname
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Package: spatialSpells
+Title: Convenient Wrappers for Common Operations with Spatial Data
+Version: 0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Blas M.", "Benito", , "blasbenito@gmail.com", role = c("aut", "cre"))
+Description: Convenient wrappers combining operations for spatial data processing. TODO.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
     "roxyglobals::global_roclet"))
-RoxygenNote: 7.3.3
 Imports:
+    sf,
+    janitor
 Suggests:
     roxyglobals,
     spelling,
@@ -21,3 +22,4 @@ Config/roxyglobals/unique: TRUE
 Depends: 
     R (>= 4.1.0)
 LazyData: true
+Config/roxygen2/version: 8.0.0

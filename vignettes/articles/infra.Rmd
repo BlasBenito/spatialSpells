@@ -1,0 +1,113 @@
+---
+title: "spatialSpells: Usage"
+output: 
+  rmarkdown::html_document:
+    toc: true
+    toc_title: "Content"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  eval      = TRUE,
+  collapse  = TRUE,
+  comment   = "#>",
+  fig.width = 8,
+  fig.align = "center",
+  dpi = 150,
+  out.width = "100%"
+)
+```
+
+
+## Overview
+
+This article shows usage examples of the `infra` functions in the R package `spatialSpells`. The prefix `infra` identifies low level functions designed as infrastructure for other packages of the `spatial` family. This article 
+
+
+## Setup
+
+The code below loads the `R` packages and example data required for this tutorial.
+
+```{r, include = FALSE}
+if (!requireNamespace("pak", quietly = TRUE)) {
+  install.packages("pak")
+}
+library(pak)
+pak::pkg_install(
+  c(
+    "dplyr",
+    "sf",
+    "mapview",
+    "terra",
+    "viridis",
+    "spatialData"
+  ),
+  ask = FALSE
+)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(dplyr)
+library(sf)
+library(mapview)
+library(terra)
+library(viridis)
+library(spatialData)
+library(spatialSpells)
+```
+
+## Example Data
+
+Here we prepare some example datasets to show how `spatialSpells` works.
+
+The code below prepares a data frame with coordinates.
+
+```{r}
+df_coordinates <- spatialData::vi |> 
+  dplyr::mutate(
+    longitude = sf::st_coordinates(geometry)[, "X"],
+    latitude = sf::st_coordinates(geometry)[, "Y"]
+  ) |> 
+  sf::st_drop_geometry() |> 
+  dplyr::select(
+    vi_numeric,
+    longitude,
+    latitude
+  )
+
+df_coordinates |> 
+  head() |> 
+  dplyr::glimpse()
+```
+In a similar way, the code below prepares a dataframe with polygons coded a well-known text (WKT). This one will take a minute, it's downloading a large-ish dataset.
+
+```{r}
+df_wkt <- spatialData::plantae_extra() |> 
+  dplyr::select(
+    ecoregion_id, 
+    richness_species, 
+    geometry
+    ) |> 
+  dplyr::mutate(
+    wkt = sf::st_as_text(geometry)
+  ) |> 
+  sf::st_drop_geometry()
+
+df_wkt |> 
+  head() |> 
+  dplyr::glimpse()
+```
+
+
+
+### Identification of columns with coordinates
+
+The datasets `infra_x_column_names` and `infra_y_column_names` contain common names for columns with coordinates in several languages.
+
+```{r}
+infra_x_column_names
+```
+```{r}
+infra_y_column_names
+```
+These obects
